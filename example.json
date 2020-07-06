@@ -1,0 +1,73 @@
+
+{
+   "order_id":6,
+   "customer_id":null,
+   "first_name":"Ryan",
+   "last_name":"Mitchell",
+   "email":"ryan@thoughtcollective.com",
+   "telephone":"7976052939",
+   "location_id":1,
+   "address_id":8,
+   "cart":{
+      "e45e0774a6556093721f173dacae7ddd":{
+         "rowId":"e45e0774a6556093721f173dacae7ddd",
+         "id":1,
+         "name":"Puff-Puff",
+         "qty":"3",
+         "price":4.99,
+         "options":{
+            "1":{
+               "id":1,
+               "name":"Drinks",
+               "values":{
+                  "1":{
+                     "id":1,
+                     "name":"Coke",
+                     "qty":1,
+                     "price":0,
+                     "subtotal":0
+                  }
+               },
+               "subtotal":0
+            }
+         },
+         "comment":"",
+         "subtotal":14.97
+      }
+   },
+   "total_items":3,
+   "comment":"asdsadsa",
+   "payment":"stripe",
+   "order_type":"delivery",
+   "date_added":"2020-06-08 08:27:36",
+   "date_modified":"2020-06-14 19:29:53",
+   "order_time":"08:43:00",
+   "order_date":"2020-06-08 00:00:00",
+   "order_total":21.93,
+   "status_id":5,
+   "ip_address":"172.31.11.37",
+   "user_agent":"Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_15_5) AppleWebKit\/605.1.15 (KHTML, like Gecko) Version\/13.1.1 Safari\/605.1.15",
+   "notify":null,
+   "assignee_id":null,
+   "assignee_group_id":null,
+   "invoice_no":"INV-2020-006",
+   "invoice_prefix":"INV-2020-00",
+   "invoice_date":"2020-06-08T08:28:03.000000Z",
+   "hash":"fcaa25f0cb3eccb3649d43acd03c710b",
+   "processed":true,
+   "status_updated_at":"2020-06-14T13:28:56.000000Z",
+   "assignee_updated_at":null,
+   "customer_name":"Ryan Mitchell",
+   "order_type_name":"Delivery",
+   "invoice_number":"INV-2020-006",
+   "status_name":"Completed",
+   "status_color":"#00a65a",
+   "status":{
+      "status_id":5,
+      "status_name":"Completed",
+      "status_comment":"",
+      "notify_customer":false,
+      "status_for":"order",
+      "status_color":"#00a65a"
+   }
+}

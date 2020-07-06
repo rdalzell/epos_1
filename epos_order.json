@@ -1,0 +1,186 @@
+{
+
+    "sequence" : 2,
+    "clerkId" : 1, 
+    "orderType" : 1,
+    "table" : 20,
+    "billNum" : 0,
+    "covers" : 0,
+    "status" : 8,
+    "PrinterMapId" : 0,
+    "AutoPriceReceipt" : 0,
+    "PrinterNUmber" : 0, 
+    "WPDeviceId" : 30721,
+
+
+    "PLUs" : [
+        {
+            "productClass" : 1,
+            "PLU": 27001,
+            "quantity": 1,
+            "priceLevel": 1,
+            "modifierId": 0,
+            "seat": 0,
+            "groupId": 0,
+            "price": "0",
+            "status": 0,
+            "wpIndexNum" : 59
+        },
+        {
+            "productClass" : 1,
+            "PLU": 27002,
+            "quantity": 1,
+            "priceLevel": 1,
+            "modifierId": 0,
+            "seat": 0,
+            "groupId": 0,
+            "price": "0",
+            "status": 0,
+            "wpIndexNum" : 60
+        },
+        {
+            "productClass" : 1,
+            "PLU": 27003,
+            "quantity": 1,
+            "priceLevel": 1,
+            "modifierId": 0,
+            "seat": 0,
+            "groupId": 0,
+            "price": "0",
+            "status": 0,
+            "wpIndexNum" : 61
+        }
+    ],
+
+    "FastPayment" : {
+        "mediaId": 1,
+        "paymentAmount": "12.00",
+        "tipAmount" : "0",
+        "subTotal" : "12.00",
+        "status" : 0,
+        "printerNo" : 0
+    }
+}
+
+
+{
+
+    "sequence" : 2,
+    "clerkId" : 1, 
+    "orderType" : 1,
+    "table" : 20,
+    "billNum" : 0,
+    "covers" : 0,
+    "status" : 8,
+    "PrinterMapId" : 0,
+    "AutoPriceReceipt" : 0,
+    "PrinterNUmber" : 0, 
+    "WPDeviceId" : 30721,
+
+
+    "PLUs" : [
+        {
+            "productClass" : 1,
+            "PLU": 27001,
+            "quantity": 1,
+            "priceLevel": 1,
+            "modifierId": 0,
+            "seat": 0,
+            "groupId": 0,
+            "price": "0",
+            "status": 0,
+            "wpIndexNum" : 59
+        },
+        {
+            "productClass" : 1,
+            "PLU": 27002,
+            "quantity": 1,
+            "priceLevel": 1,
+            "modifierId": 0,
+            "seat": 0,
+            "groupId": 0,
+            "price": "0",
+            "status": 0,
+            "wpIndexNum" : 60
+        },
+        {
+            "productClass" : 1,
+            "PLU": 27003,
+            "quantity": 1,
+            "priceLevel": 1,
+            "modifierId": 0,
+            "seat": 0,
+            "groupId": 0,
+            "price": "0",
+            "status": 0,
+            "wpIndexNum" : 61
+        }
+    ],
+
+
+    "custom_products": [
+        {
+            "quantity" : 1,
+            "seat" : 1,
+            "groupId": 0,
+            "price" : "8.99",
+            "productName" : "Custom Name 1",
+            "status" : 0,
+            "KpPrinters" : 0,
+            "wpIndexNum" : 62
+        }
+
+    ],
+
+    "custom_messages" : [
+        {
+            "quantity" : 1,
+            "seat" : 1,
+            "MessageText" : "Custom Message 1",
+            "status" : 0,
+            "KpPrinters" : 0,
+            "wpIndexNum" : 63
+        }
+
+    ],
+
+    "cards" : [
+
+        {
+            "cardType" : 2,
+            "cardData" : "0000001100000200"
+        }
+    ]
+
+
+
+    "FastPayment" : {
+        "mediaId": 1,
+        "paymentAmount": "12.00",
+        "tipAmount" : "0",
+        "subTotal" : "12.00",
+        "status" : 0,
+        "printerNo" : 0
+    }
+}
+
+
+
+00 ff 00 ff 2e e1 40 40 00 09 00 6c 01 00 12 01 
+00 02 00 01 01 00 14 00 00 00 08 00 00 00 00 78 
+01 02 00 12 01 00 00 69 79 01 01 00 00 00 01 30 
+00 00 00 00 00 3b 02 00 12 01 00 00 69 7a 01 01 
+00 00 00 01 30 00 00 00 00 00 3c 02 00 12 01 00 
+00 69 7b 01 01 00 00 00 01 30 00 00 00 00 00 3d 
+08 00 12 01 05 31 32 2e 30 30 01 30 05 31 32 2e 
+30 30 00 00 00 0f 00 00
+
+00 ff 00 ff 2e e1 40 40 00 09 00 6c 01 00 12 01
+00 02 00 01 01 00 14 00 00 00 08 00 00 00 00 78 
+01 02 00 12 01 00 00 69 79 01 01 00 00 00 01 30 
+00 00 00 00 00 3b 02 00 12 01 00 00 69 7a 01 01 
+00 00 00 01 30 00 00 00 00 00 3c 02 00 12 01 00 
+00 69 7b 01 01 00 00 00 01 30 00 00 00 00 00 3d 
+08 00 12 01 05 31 32 2e 30 30 01 30 05 31 32 2e 
+30 30 00 00 00 0f 00 00
+
