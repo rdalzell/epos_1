@@ -364,7 +364,7 @@ def decode_response(response):
 def dump_bstring(bstring):
     ba = bytearray(bstring)
     hex_string = "".join("%02x " % b for b in ba)
-    print (hex_string)
+    return (hex_string)
 
 
 
