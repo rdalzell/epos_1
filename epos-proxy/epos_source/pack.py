@@ -10,8 +10,6 @@ def create_epos_packet(order_json):
     packed_custom_messages = b''
     packed_cards = b''
 
-
-
     # Create Order Header
     Order_Header = {}
     Order_Header['sequence'] = order_json['sequence']
@@ -23,7 +21,7 @@ def create_epos_packet(order_json):
     Order_Header['status'] = order_json['status']
     Order_Header['PrinterMapId'] = order_json['PrinterMapId']
     Order_Header['AutoPriceReceipt'] = order_json['AutoPriceReceipt']
-    Order_Header['PrinterNUmber'] = order_json['PrinterNUmber']
+    Order_Header['PrinterNumber'] = order_json['PrinterNumber']
     Order_Header['WPDeviceId'] = order_json['WPDeviceId']
 
     packed_order_header = create_orderHeader(Order_Header)
@@ -51,7 +49,7 @@ def create_epos_packet(order_json):
         A = order_json['cards']
         packed_cards = b''
         for card in A:
-            packed_cards += create_cards(card)
+            packed_cards += create_card(card)
 
     if 'FastPayment' in order_json:
         # Assuming 0 or 1 item
@@ -154,7 +152,7 @@ def create_orderHeader(Order_Header):
             Order_Header['status'],
             Order_Header['PrinterMapId'],
             Order_Header['AutoPriceReceipt'],
-            Order_Header['PrinterNUmber'],
+            Order_Header['PrinterNumber'],
             Order_Header['WPDeviceId']))
 
 def create_plu(PLU):
@@ -297,7 +295,7 @@ def create_card(card):
         Card Data Example: 0000001100000200 would represent member 000002
         Card Data Example: 0000001100123400 would represent member 001234
     '''
-    blockLength = 1 + 1 + len(cardData)
+    blockLength = 1 + 1 + len(card['cardData'])
     return (struct.pack('!BHBBs',
         5,
         blockLength,
@@ -356,9 +354,85 @@ def create_comms_response(responseValue):
         responseValue,
         0))
 
+
+def decode_header(hdr):
+    '''
+    Uint8 0 Sync Bytes 1 of 4
+    Uint8 255 Sync Bytes 2 of 4
+    Uint8 0 Sync Bytes 3 of 4
+    Uint8 255 Sync Bytes 4 of 4
+    Uint16 LineType* Header Type (see defines below)
+    Uint8 64 Internal
+    Uint8 64 Internal
+    Uint8 0 Internal
+    Uint8 DeviceType* Device Type (see defines below)
+    Uint16 DataLen Length of data block to follow
+
+    LineTypes
+        SVR_NC_DATA 12001 (0x2E 0xE1) Use this for messages you send to POS
+        SVR_POS_DATA 12002 (0x2E 0xE2) Expect this for messages you receive from POS
+    DeviceType
+        DEVICE_EXTERNAL 9
+    '''
+    values = struct.unpack('!BBBBHBBBBH', hdr)
+    header = {
+        '0':        values[0], 
+        '255':      values[1],
+        '0' :       values[2], 
+        '255':      values[3], 
+        'lineType': values[4], 
+        '64':       values[5], 
+        '64':       values[6], 
+        '0':        values[7], 
+        'deviceType': values[8], 
+        'dataLen' : values[9]
+    }
+    return (header)
+
 def decode_response(response):
-    print (response)
-    return 1
+    # Response by POS
+    # 00 ff 00 ff 2e e2 56 37 00 01 00 03 f2 00 00
+    # Extract Packet Header (12 bytes)
+    # Comms Stats Response
+    '''
+    Uint8 Response Value
+    Response Value (see below)
+    Uint16 0 Reserved
+    Valid response values from POS for orders from the WaiterPad
+
+    ACK 242 // packet was received successfully
+    NAK 243 // an unknown error occurred with the packet data
+    If no response is received from the POS within 15 seconds, a timeout will occur.
+    '''
+
+    # Packet header
+    hdr = response[0:12]
+    header = decode_header(hdr)
+
+    print (header)
+
+    # CHECK THIS IS A CORRECT HEADER!
+    goodResponse = False
+    commsStatus = {}
+    if header['dataLen'] == 3:
+        # Comms Status Response
+        csr = response[12:15]
+        values = struct.unpack('!BH', csr)
+
+        commsStatus = {
+            "ResponseValue" : values[0],
+            "Reserved" : values[1]
+        }
+        print (commsStatus)
+        if commsStatus['ResponseValue'] == 242:
+            goodResponse = True
+        else:
+            goodResponse = False
+    else:
+        print ("InvalidResponse")
+
+    return goodResponse, commsStatus
+
 
 
 def dump_bstring(bstring):

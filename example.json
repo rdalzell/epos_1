@@ -71,3 +71,99 @@
       "status_color":"#00a65a"
    }
 }
+
+
+{
+   "sequence" : 2,
+   "clerkId" : 1, 
+   "orderType" : 1,
+   "table" : 20,
+   "billNum" : 0,
+   "covers" : 0,
+   "status" : 8,
+   "PrinterMapId" : 0,
+   "AutoPriceReceipt" : 0,
+   "PrinterNumber" : 0, 
+   "WPDeviceId" : 30721,
+
+
+   "PLUs" : [
+       {
+           "productClass" : 1,
+           "PLU": 27001,
+           "quantity": 1,
+           "priceLevel": 1,
+           "modifierId": 0,
+           "seat": 0,
+           "groupId": 0,
+           "price": "0",
+           "status": 0,
+           "wpIndexNum" : 59
+       },
+       {
+           "productClass" : 1,
+           "PLU": 27002,
+           "quantity": 1,
+           "priceLevel": 1,
+           "modifierId": 0,
+           "seat": 0,
+           "groupId": 0,
+           "price": "0",
+           "status": 0,
+           "wpIndexNum" : 60
+       },
+       {
+           "productClass" : 1,
+           "PLU": 27003,
+           "quantity": 1,
+           "priceLevel": 1,
+           "modifierId": 0,
+           "seat": 0,
+           "groupId": 0,
+           "price": "0",
+           "status": 0,
+           "wpIndexNum" : 61
+       }
+   ],
+
+   "custom_products" : [
+      {
+         "quantity": 1,
+         "seat" : 0,
+         "groupId" : 0,
+         "price" : "12.99",
+         "productName" : "RandomCustomProduct",
+         "status" : 0,
+         "KpPrinters" : 0,
+         "wpIndexNum" : 62
+      }
+   ],
+
+   "custom_messages" : [
+      {
+         "quantity": 1,
+         "seat" : 0,
+         "MessageText" : "This is a custome message",
+         "status" : 0,
+         "KpPrinters" : 0,
+         "wpIndexNum" : 63
+      }
+   ],
+
+   "cards" : [
+      {
+         "cardType" :0,
+         "cardData" : "1234123412341234"
+      }
+   ],
+
+   
+   "FastPayment" : {
+       "mediaId": 1,
+       "paymentAmount": "12.00",
+       "tipAmount" : "0",
+       "subTotal" : "12.00",
+       "status" : 0,
+       "printerNo" : 0
+   }
+}

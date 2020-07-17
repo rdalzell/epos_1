@@ -11,6 +11,9 @@ Parameters:
   EposTcpPort:
     Type: Number
     Default: 2022
+  EposSocketTimeout:
+    Type: Number
+    Default: 20
 
 # More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
@@ -25,6 +28,7 @@ Resources:
         Variables:
           TCP_IP: !Ref EposTcpIpAddr
           TCP_PORT: !Ref EposTcpPort
+          TIMEOUT: !Ref EposSocketTimeout
       CodeUri: epos_source/
       Handler: app.lambda_handler
       Runtime: python3.7

@@ -3,9 +3,9 @@ version = 0.1
 [default.deploy]
 [default.deploy.parameters]
 stack_name = "sam-app"
-s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-kpz8x60knc0y"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-11u0qevhah4e1"
 s3_prefix = "sam-app"
-region = "us-east-1"
+region = "eu-west-2"
 capabilities = "CAPABILITY_IAM"
-parameter_overrides = "EposTcpIpAddr=\"79.79.1.47\" EposTcpPort=\"2022\""
+parameter_overrides = "EposTcpIpAddr=\"79.79.1.47\" EposTcpPort=\"2022\" EposSocketTimeout=\"20\""
 

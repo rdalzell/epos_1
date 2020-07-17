@@ -1,8 +1,8 @@
 import json
-import pack
 import os
 import base64
-import sock
+import pack 
+import sock 
 
 # import requests
 config = {}
@@ -13,9 +13,14 @@ else:
     config['TCP_IP'] = '79.79.1.47'    
 
 if 'TCP_PORT' in os.environ:
-    config['TCP_PORT'] = os.environ['TCP_PORT']
+    config['TCP_PORT'] = int(os.environ['TCP_PORT'])
 else:
     config['TCP_PORT'] = 2022
+
+if 'TIMEOUT' in os.environ:
+    config['TIMEOUT'] = int(os.environ['TIMEOUT'])
+else:
+    config['TIMEOUT'] = 20
 
 
 def lambda_handler(event, context):
@@ -41,10 +46,23 @@ def lambda_handler(event, context):
 
     # Validate the event
     # Method can only be a POST and Path /order
+    print (event)
     json_event = event
     method = json_event['httpMethod']
     path = json_event['path']
     ret = 'nothing'
+
+    dryrun = True
+    confirm = False
+
+    params = event['queryStringParameters']
+
+    if params is not None:
+        if 'dryrun' in params:
+            dryrun = True
+        elif 'confirm' in params:
+            confirm = True
+            dryrun = False
 
     if (method == 'POST') and (path == '/order'):
         # extract Order details
@@ -57,11 +75,37 @@ def lambda_handler(event, context):
 
             order = json.loads(body)
             packet = pack.create_epos_packet(order)
-            ret =  pack.dump_bstring(packet)
 
-            # Send Request
-            #response = sock.send_packet_recv(config['TCP_IP'], config['TCP_PORT'], packet)
-            #print (response)
+            print (packet)
+
+            if dryrun:
+                # Return TCP packet bytes
+                packet =  pack.dump_bstring(packet)
+                ret = {
+                    "statusCode": 200,
+                    "body": json.dumps({
+                        "packet": packet,
+                    })
+                }
+            elif confirm:
+                # Send Request
+                print ("SENDING PACKET")
+                resp = sock.send_packet_recv_timeout(config['TCP_IP'], config['TCP_PORT'], packet, config['TIMEOUT'])
+                print ("SERVER RETURNS:", resp)
+                (goodResponse, response) = pack.decode_response(resp)
+                print ("SERVER RESPONSE", goodResponse, response)
+
+                if goodResponse:
+                    statusCode = 200
+                else:
+                    statusCode = 401
+                ret = {
+                    "statusCode": statusCode,
+                    "body": json.dumps({
+                        "commsStatus": response,
+                    })
+                }
+                
         '''
         except Exception as e:
             print (e)
@@ -71,10 +115,4 @@ def lambda_handler(event, context):
 
     # Forward order to server
 
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "packet": ret,
-        }),
-    }
+    return ret
