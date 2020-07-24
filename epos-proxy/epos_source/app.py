@@ -20,7 +20,7 @@ else:
 if 'TIMEOUT' in os.environ:
     config['TIMEOUT'] = int(os.environ['TIMEOUT'])
 else:
-    config['TIMEOUT'] = 20
+    config['TIMEOUT'] = 60
 
 
 def lambda_handler(event, context):
@@ -66,52 +66,69 @@ def lambda_handler(event, context):
 
     if (method == 'POST') and (path == '/order'):
         # extract Order details
-        #try:
-        if 'body' in event and event['body'] is not None:
-            body = event['body']
-            # Check to see if data is Base64 encode
-            if (event['isBase64Encoded'] == True):
-                body = base64.b64decode(body)   
+        try:
+            if 'body' in event and event['body'] is not None:
+                body = event['body']
+                # Check to see if data is Base64 encode
+                if (event['isBase64Encoded'] == True):
+                    body = base64.b64decode(body)   
 
-            order = json.loads(body)
-            packet = pack.create_epos_packet(order)
+                requestBody = json.loads(body)
+                order = requestBody['order']
 
-            print (packet)
-
-            if dryrun:
-                # Return TCP packet bytes
-                packet =  pack.dump_bstring(packet)
-                ret = {
-                    "statusCode": 200,
-                    "body": json.dumps({
-                        "packet": packet,
-                    })
-                }
-            elif confirm:
-                # Send Request
-                print ("SENDING PACKET")
-                resp = sock.send_packet_recv_timeout(config['TCP_IP'], config['TCP_PORT'], packet, config['TIMEOUT'])
-                print ("SERVER RETURNS:", resp)
-                (goodResponse, response) = pack.decode_response(resp)
-                print ("SERVER RESPONSE", goodResponse, response)
-
-                if goodResponse:
-                    statusCode = 200
+                if 'serverIpAddr' in requestBody:
+                    server_ip = requestBody['serverIpAddr']
                 else:
-                    statusCode = 401
-                ret = {
-                    "statusCode": statusCode,
-                    "body": json.dumps({
-                        "commsStatus": response,
-                    })
-                }
+                    server_ip = config['TCP_IP']
+
+                if 'serverPort' in requestBody:
+                    server_port = requestBody['serverPort']
+                else:
+                    server_port = config['TCP_PORT']
+
+                packet = pack.create_epos_packet(order)
+
+                print (packet)
+
+                if dryrun:
+                    # Return TCP packet bytes
+                    packet =  pack.dump_bstring(packet)
+                    ret = {
+                        "statusCode": 200,
+                        "body": json.dumps({
+                            "packet": packet,
+                            "ip" : server_ip,
+                            "port" : server_port
+                        })
+                    }
+                elif confirm:
+                    # Send Request
+                    print ("SENDING PACKET")
+                    resp = sock.send_packet_recv_timeout(server_ip, server_port, packet, config['TIMEOUT'])
+                    print ("SERVER RETURNS:", resp)
+                    (goodResponse, response) = pack.decode_response(resp)
+                    print ("SERVER RESPONSE", goodResponse, response)
+
+                    if goodResponse:
+                        statusCode = 200
+                    else:
+                        statusCode = 401
+                    ret = {
+                        "statusCode": statusCode,
+                        "body": json.dumps({
+                            "commsStatus": response,
+                        })
+                    }
                 
-        '''
         except Exception as e:
             print (e)
-            ret = 'exception'
+            ret = {
+                    "statusCode": 502,
+                    "body": json.dumps({
+                        "exception": str(e),
+                    })    
+                }
             #raise e
-        '''   
 
     # Forward order to server
 

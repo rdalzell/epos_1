@@ -1,166 +1,220 @@
 {
+    "serverIpAddr" : "1.2.3.4",
+    "serverPort" : 2020,
+    "order" : {
 
-    "sequence" : 2,
-    "clerkId" : 1, 
-    "orderType" : 1,
-    "table" : 20,
-    "billNum" : 0,
-    "covers" : 0,
-    "status" : 8,
-    "PrinterMapId" : 0,
-    "AutoPriceReceipt" : 0,
-    "PrinterNUmber" : 0, 
-    "WPDeviceId" : 30721,
+        "sequence" : 2,
+        "clerkId" : 1, 
+        "orderType" : 1,
+        "table" : 20,
+        "billNum" : 0,
+        "covers" : 0,
+        "status" : 8,
+        "printerMapId" : 0,
+        "autoPriceReceipt" : 0,
+        "printerNumber" : 0, 
+        "wpDeviceId" : 30721,
 
 
-    "PLUs" : [
-        {
-            "productClass" : 1,
-            "PLU": 27001,
-            "quantity": 1,
-            "priceLevel": 1,
-            "modifierId": 0,
-            "seat": 0,
-            "groupId": 0,
-            "price": "0",
-            "status": 0,
-            "wpIndexNum" : 59
-        },
-        {
-            "productClass" : 1,
-            "PLU": 27002,
-            "quantity": 1,
-            "priceLevel": 1,
-            "modifierId": 0,
-            "seat": 0,
-            "groupId": 0,
-            "price": "0",
-            "status": 0,
-            "wpIndexNum" : 60
-        },
-        {
-            "productClass" : 1,
-            "PLU": 27003,
-            "quantity": 1,
-            "priceLevel": 1,
-            "modifierId": 0,
-            "seat": 0,
-            "groupId": 0,
-            "price": "0",
-            "status": 0,
-            "wpIndexNum" : 61
+        "PLUs" : [
+            {
+                "productClass" : 1,
+                "PLU": 27001,
+                "quantity": 1,
+                "priceLevel": 1,
+                "modifierId": 0,
+                "seat": 0,
+                "groupId": 0,
+                "price": "0",
+                "status": 0,
+                "wpIndexNum" : 59
+            },
+            {
+                "productClass" : 1,
+                "PLU": 27002,
+                "quantity": 1,
+                "priceLevel": 1,
+                "modifierId": 0,
+                "seat": 0,
+                "groupId": 0,
+                "price": "0",
+                "status": 0,
+                "wpIndexNum" : 60
+            },
+            {
+                "productClass" : 1,
+                "PLU": 27003,
+                "quantity": 1,
+                "priceLevel": 1,
+                "modifierId": 0,
+                "seat": 0,
+                "groupId": 0,
+                "price": "0",
+                "status": 0,
+                "wpIndexNum" : 61
+            }
+        ],
+
+        "fastPayment" : {
+            "mediaId": 1,
+            "paymentAmount": "12.00",
+            "tipAmount" : "0",
+            "subTotal" : "12.00",
+            "status" : 0,
+            "printerNo" : 0
         }
-    ],
-
-    "FastPayment" : {
-        "mediaId": 1,
-        "paymentAmount": "12.00",
-        "tipAmount" : "0",
-        "subTotal" : "12.00",
-        "status" : 0,
-        "printerNo" : 0
     }
 }
 
 
 {
+    "serverIpAddr" : "1.2.3.4",
+    "serverPort" : 2020,
+    "order" : {
 
-    "sequence" : 2,
-    "clerkId" : 1, 
-    "orderType" : 1,
-    "table" : 20,
-    "billNum" : 0,
-    "covers" : 0,
-    "status" : 8,
-    "PrinterMapId" : 0,
-    "AutoPriceReceipt" : 0,
-    "PrinterNUmber" : 0, 
-    "WPDeviceId" : 30721,
-
-
-    "PLUs" : [
-        {
-            "productClass" : 1,
-            "PLU": 27001,
-            "quantity": 1,
-            "priceLevel": 1,
-            "modifierId": 0,
-            "seat": 0,
-            "groupId": 0,
-            "price": "0",
-            "status": 0,
-            "wpIndexNum" : 59
-        },
-        {
-            "productClass" : 1,
-            "PLU": 27002,
-            "quantity": 1,
-            "priceLevel": 1,
-            "modifierId": 0,
-            "seat": 0,
-            "groupId": 0,
-            "price": "0",
-            "status": 0,
-            "wpIndexNum" : 60
-        },
-        {
-            "productClass" : 1,
-            "PLU": 27003,
-            "quantity": 1,
-            "priceLevel": 1,
-            "modifierId": 0,
-            "seat": 0,
-            "groupId": 0,
-            "price": "0",
-            "status": 0,
-            "wpIndexNum" : 61
-        }
-    ],
+        "sequence" : 2,
+        "clerkId" : 1, 
+        "orderType" : 1,
+        "table" : 20,
+        "billNum" : 0,
+        "covers" : 0,
+        "status" : 8,
+        "printerMapId" : 0,
+        "autoPriceReceipt" : 0,
+        "printerNumber" : 0, 
+        "wpDeviceId" : 30721,
 
 
-    "custom_products": [
-        {
-            "quantity" : 1,
-            "seat" : 1,
-            "groupId": 0,
-            "price" : "8.99",
-            "productName" : "Custom Name 1",
+        "PLUs" : [
+            {
+                "productClass" : 1,
+                "PLU": 27001,
+                "quantity": 1,
+                "priceLevel": 1,
+                "modifierId": 0,
+                "seat": 0,
+                "groupId": 0,
+                "price": "0",
+                "status": 0,
+                "wpIndexNum" : 59
+            },
+            {
+                "productClass" : 1,
+                "PLU": 27002,
+                "quantity": 1,
+                "priceLevel": 1,
+                "modifierId": 0,
+                "seat": 0,
+                "groupId": 0,
+                "price": "0",
+                "status": 0,
+                "wpIndexNum" : 60
+            },
+            {
+                "productClass" : 1,
+                "PLU": 27003,
+                "quantity": 1,
+                "priceLevel": 1,
+                "modifierId": 0,
+                "seat": 0,
+                "groupId": 0,
+                "price": "0",
+                "status": 0,
+                "wpIndexNum" : 61
+            }
+        ],
+
+
+        "customProducts": [
+            {
+                "quantity" : 1,
+                "seat" : 1,
+                "groupId": 0,
+                "price" : "8.99",
+                "productName" : "Custom Name 1",
+                "status" : 0,
+                "kpPrinters" : 0,
+                "wpIndexNum" : 62
+            }
+
+        ],
+
+        "customMessages" : [
+            {
+                "quantity" : 1,
+                "seat" : 1,
+                "messageText" : "Custom Message 1",
+                "status" : 0,
+                "kpPrinters" : 0,
+                "wpIndexNum" : 63
+            }
+
+        ],
+
+        "cards" : [
+
+            {
+                "cardType" : 2,
+                "cardData" : "0000001100000200"
+            }
+        ],
+
+        "textStamps" : [
+            {
+                "ID" : 100,
+                "messageText" : "Random Text Stamp 1" 
+            },
+            {
+                "ID" : 102,
+                "messageText" : "Random Text Stamp 2" 
+            }      
+        ],
+
+
+
+        "adjustments" : [
+            {
+                "ID" : 200,
+                "wpIndexNum" : 64,
+                "posIndexNum" : 0,
+                "posTerminalID" : "  ",
+                "watchOverrides" : [
+                    {
+                        "watchID" : 100,
+                        "rewardAmount" : "1.20",
+                        "rewardPercentage" : "0"
+                    },
+                    {
+                        "watchID" : 101,
+                        "rewardAmount" : "0",
+                        "rewardPercentage" : "8.25"
+                    }
+                ]
+            },
+            {
+                "ID" : 201,
+                "wpIndexNum" : 65,
+                "posIndexNum" : 0,
+                "posTerminalID" : "  ",
+                "watchOverrides" : [
+                    {
+                        "watchID" : 110,
+                        "rewardAmount" : "1.20",
+                        "rewardPercentage" : "0"
+                    }
+                ]
+            }       
+
+        ],
+
+        "fastPayment" : {
+            "mediaId": 1,
+            "paymentAmount": "12.00",
+            "tipAmount" : "0",
+            "subTotal" : "12.00",
             "status" : 0,
-            "KpPrinters" : 0,
-            "wpIndexNum" : 62
+            "printerNo" : 0
         }
-
-    ],
-
-    "custom_messages" : [
-        {
-            "quantity" : 1,
-            "seat" : 1,
-            "MessageText" : "Custom Message 1",
-            "status" : 0,
-            "KpPrinters" : 0,
-            "wpIndexNum" : 63
-        }
-
-    ],
-
-    "cards" : [
-
-        {
-            "cardType" : 2,
-            "cardData" : "0000001100000200"
-        }
-    ]
-
-
-
-    "FastPayment" : {
-        "mediaId": 1,
-        "paymentAmount": "12.00",
-        "tipAmount" : "0",
-        "subTotal" : "12.00",
-        "status" : 0,
-        "printerNo" : 0
     }
 }
 

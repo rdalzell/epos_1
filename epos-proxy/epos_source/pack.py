@@ -9,6 +9,8 @@ def create_epos_packet(order_json):
     packed_custom_products = b''
     packed_custom_messages = b''
     packed_cards = b''
+    packed_adjustments = b''
+    packed_text_stamp = b''
 
     # Create Order Header
     Order_Header = {}
@@ -19,10 +21,10 @@ def create_epos_packet(order_json):
     Order_Header['billNum'] = order_json['billNum']
     Order_Header['covers'] = order_json['covers']
     Order_Header['status'] = order_json['status']
-    Order_Header['PrinterMapId'] = order_json['PrinterMapId']
-    Order_Header['AutoPriceReceipt'] = order_json['AutoPriceReceipt']
-    Order_Header['PrinterNumber'] = order_json['PrinterNumber']
-    Order_Header['WPDeviceId'] = order_json['WPDeviceId']
+    Order_Header['printerMapId'] = order_json['printerMapId']
+    Order_Header['autoPriceReceipt'] = order_json['autoPriceReceipt']
+    Order_Header['printerNumber'] = order_json['printerNumber']
+    Order_Header['wpDeviceId'] = order_json['wpDeviceId']
 
     packed_order_header = create_orderHeader(Order_Header)
 
@@ -33,14 +35,14 @@ def create_epos_packet(order_json):
         for PLU in PLUs:
             packed_plu += create_plu(PLU)
 
-    if 'custom_products' in order_json:
-        A = order_json['custom_products']
+    if 'customProducts' in order_json:
+        A = order_json['customProducts']
         packed_custom_products = b''
         for custom_product in A:
             packed_custom_products += create_custom_product(custom_product)
 
-    if 'custom_messages' in order_json:
-        A = order_json['custom_messages']
+    if 'customMessages' in order_json:
+        A = order_json['customMessages']
         packed_custom_messages = b''
         for custom_message in A:
             packed_custom_messages += create_custom_message(custom_message)
@@ -51,16 +53,30 @@ def create_epos_packet(order_json):
         for card in A:
             packed_cards += create_card(card)
 
-    if 'FastPayment' in order_json:
+    if 'fastPayment' in order_json:
         # Assuming 0 or 1 item
-        FastPayment = order_json['FastPayment']
+        FastPayment = order_json['fastPayment']
         packed_fast_payment = create_fast_payment(FastPayment)
+
+    if 'adjustments' in order_json:
+        Adjustments = order_json['adjustments']
+        packed_adjustments = b''
+        for Adjustment in Adjustments:
+            packed_adjustments += create_adjustment(Adjustment)
+
+    if 'textStamps' in order_json:
+        TextStamps = order_json['textStamps']
+        packed_text_stamp = b''
+        for TextStamp in TextStamps:
+            packed_text_stamp += create_textstamp(TextStamp)
+
+
 
     footer = create_order_footer()
 
     total_len = len(packed_order_header) + len(packed_plu) + \
                 len(packed_custom_products) +  len(packed_custom_messages) +  \
-                len(packed_cards) + len(packed_fast_payment) + len(footer)
+                len(packed_cards) + +len(packed_adjustments) + len (packed_text_stamp) + len(packed_fast_payment) + len(footer)
 
     packet_header = create_packetHeader(12001, 9, total_len)
 
@@ -74,7 +90,6 @@ def create_epos_packet(order_json):
 
 
 
-    
 
 
 def create_packetHeader(lineType, deviceType, dataLen):
@@ -150,10 +165,10 @@ def create_orderHeader(Order_Header):
             Order_Header['billNum'],
             Order_Header['covers'],
             Order_Header['status'],
-            Order_Header['PrinterMapId'],
-            Order_Header['AutoPriceReceipt'],
-            Order_Header['PrinterNumber'],
-            Order_Header['WPDeviceId']))
+            Order_Header['printerMapId'],
+            Order_Header['autoPriceReceipt'],
+            Order_Header['printerNumber'],
+            Order_Header['wpDeviceId']))
 
 def create_plu(PLU):
     #PLU Sale
@@ -244,7 +259,7 @@ def create_custom_product(custom_product):
         len(custom_product['productName']),
         custom_product['productName'].encode('utf-8'),
         custom_product['status'],
-        custom_product['KpPrinters'],
+        custom_product['kpPrinters'],
         custom_product['wpIndexNum']) )
 
 def create_custom_message(custom_message):
@@ -269,16 +284,16 @@ def create_custom_message(custom_message):
         Reserved 01000000b // reserved
 
     '''
-    blockLength = 1 + 1 + 1 + len(custom_message['MessageText']) + 2 + 2 + 4 
-    return (struct.pack('!BHBB B%ds HHL' % len(custom_message['MessageText']),
+    blockLength = 1 + 1 + 1 + len(custom_message['messageText']) + 2 + 2 + 4 
+    return (struct.pack('!BHBB B%ds HHL' % len(custom_message['messageText']),
         4,
         blockLength,
         custom_message['quantity'],
         custom_message['seat'],
-        len(custom_message['MessageText']),
-        custom_message['MessageText'].encode('utf-8'),
+        len(custom_message['messageText']),
+        custom_message['messageText'].encode('utf-8'),
         custom_message['status'],
-        custom_message['KpPrinters'],
+        custom_message['kpPrinters'],
         custom_message['wpIndexNum']))
 
 def create_card(card):
@@ -330,6 +345,69 @@ def create_fast_payment(fast_payment):
         fast_payment['subTotal'].encode('utf-8'),
         fast_payment['status'],
         fast_payment['printerNo']) )
+
+
+def create_textstamp(TextStamp):
+    '''
+    Uint8   07 lineType for a Text Stamp Record
+    Uint16  *<variable> Block length of the data to follow
+    Uint32  ID Text Stamp ID
+    PString Message Text    User entered text for the text stamp.
+    '''
+    blockLength = 4 + 1 + len(TextStamp['messageText'])
+
+    return ( struct.pack('!BHL B%ds' % len(TextStamp['messageText']), 
+                7, 
+                blockLength,
+                TextStamp['ID'],
+                len(TextStamp['messageText']),
+                TextStamp['messageText'].encode('utf-8')) )
+
+
+def create_override(Override):
+    return (struct.pack('!H B%ds B%ds' % (len(Override['rewardAmount']), len(Override['rewardPercentage'])),
+          Override['watchID'],
+          len(Override['rewardAmount']),
+          Override['rewardAmount'].encode('utf-8'),
+          len(Override['rewardPercentage']),
+          Override['rewardPercentage'].encode('utf-8')) )
+
+def create_adjustment(Adjustment):
+    '''
+    Uint8  06                 lineType for an Adjustment record
+    Uint16     *<variable>    Block length of the data to follow
+    Uint16 ID   Adjustment    ID
+    Uint32   wpIndexNum*      WaiterPads Unique record identifier for the selected item sale (if applicable).
+    Uint32    posIndexNum*    POS’s unique index identifier for the selected item sale (if applicable).
+    Pstring   posTerminalID*  POS’s terminal id for the selected item sale (if applicable).
+    Uint8    Watch Override Count   The number of adjustment watch overrides to follow
+        { repeat Watch Override Count times
+           Uint16   Watch ID*  The ID of the adjustment watch
+           Pstring  RewardAmount*  Reward value of the watch (blank if not applicable)
+           Pstring  RewardPercentage* Percentage value of the watch (blank if not applicable)
+        }
+    '''
+    watchOverrides = Adjustment['watchOverrides']
+
+    packed_overrides = b''
+    for i in watchOverrides:
+        packed_overrides += create_override(i)
+
+    blockLength = 2 + 4 + 4 + 1 + len(Adjustment['posTerminalID']) + 1 + len (packed_overrides)
+
+    adjustment_hdr = struct.pack('!BHHLL B%ds B' % len(Adjustment['posTerminalID']),
+         6,
+         blockLength,
+         Adjustment['ID'],
+         Adjustment['wpIndexNum'],
+         Adjustment['posIndexNum'],
+         len(Adjustment['posTerminalID']),
+         Adjustment['posTerminalID'].encode('utf-8'),
+         len(watchOverrides))
+
+    return (adjustment_hdr  + packed_overrides)
+
+
 
 def create_order_footer():
     # Order Footer
@@ -420,11 +498,11 @@ def decode_response(response):
         values = struct.unpack('!BH', csr)
 
         commsStatus = {
-            "ResponseValue" : values[0],
-            "Reserved" : values[1]
+            "responseValue" : values[0],
+            "reserved" : values[1]
         }
         print (commsStatus)
-        if commsStatus['ResponseValue'] == 242:
+        if commsStatus['responseValue'] == 242:
             goodResponse = True
         else:
             goodResponse = False
